@@ -24,7 +24,7 @@ setup(
     ],
     description="A pytest plugin to control the order in which tests are run in.",
     entry_points={
-        "pytest11": ["ordered = pytest_pytest_ordered",],
+        "pytest11": ["ordered = pytest_ordered",],
     },
     extras_require={
         "test": ["pytest>=3", "pytest-order", "coverage", "pytest-cov"]
