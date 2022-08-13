@@ -29,7 +29,7 @@ def test_hello_ini_setting(pytester):
     assert result.ret == 0, str(result.stdout)
 
     shutil.copy(MOCK_PROJECT / "pytest.ini", pytester.path)
-    result = pytester.runpytest('-v', "-W", "error::UserWarning")
+    result = pytester.runpytest("-W", "error::UserWarning")
     assert result.ret == 0, str(result.stdout)
     result.stdout.fnmatch_lines([
         "*test_first*", "*test_second*", "*test_third*", "*test_fourth*",
@@ -38,7 +38,8 @@ def test_hello_ini_setting(pytester):
 
     shutil.copy(MOCK_PROJECT / "degenerate-pytest.ini",
                 pytester.path / "pytest.ini")
-    result = pytester.runpytest('-v', "-W", "error::UserWarning")
+    result = pytester.runpytest("-W", "error::UserWarning")
     assert result.ret != 0, str(result.stdout)
-    result.stderr.fnmatch_lines(
-        ['*file "tests/test_fifth.py" does * the "order" section*'])
+    result.stderr.re_match_lines([
+        r".*files \['tests/test_fifth.py'\] do not .* the \"order\" section.*"
+    ])

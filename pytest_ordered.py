@@ -13,16 +13,20 @@ def pytest_collection_modifyitems(session, config, items):
         return
     order = expand_test_order(config.inicfg["order"])
     ranks = []
+    errors = set()
     for test in items:
         location = test.location[0].replace(os.path.sep, "/")
         try:
             rank = order.index(location)
         except ValueError:
-            raise pytest.UsageError(
-                f'Test file "{test.location[0]}" does not match any of the '
-                f'test file names listed in the "order" section of the '
-                f'pytest.ini/setup.cfg file.') from None
+            errors.add(location)
+            continue
         ranks.append(rank)
+    if errors:
+        raise pytest.UsageError(
+            f'Test files {list(errors)} do not match any of the '
+            f'test file paths listed in the "order" section of the '
+            f'pytest.ini/setup.cfg file.')
     args = sorted(range(len(items)), key=ranks.__getitem__)
     items[:] = [items[i] for i in args]
 
