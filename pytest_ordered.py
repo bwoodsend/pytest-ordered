@@ -1,4 +1,5 @@
 import re
+import os
 
 import pytest
 
@@ -13,7 +14,8 @@ def pytest_collection_modifyitems(session, config, items):
     order = expand_test_order(config.inicfg["order"])
     ranks = []
     for test in items:
-        key = lambda item: test.location[0] == item[1]
+        location = test.location[0].replace(os.path.sep, "/")
+        key = lambda item: location == item[1]
         best_match = max(enumerate(order), key=key)
         if not key(best_match):
             raise pytest.UsageError(
