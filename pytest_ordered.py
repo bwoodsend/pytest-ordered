@@ -15,15 +15,14 @@ def pytest_collection_modifyitems(session, config, items):
     ranks = []
     for test in items:
         location = test.location[0].replace(os.path.sep, "/")
-        key = lambda item: location == item[1]
-        best_match = max(enumerate(order), key=key)
-        if not key(best_match):
+        try:
+            rank = order.index(location)
+        except ValueError:
             raise pytest.UsageError(
                 f'Test file "{test.location[0]}" does not match any of the '
                 f'test file names listed in the "order" section of the '
-                f'pytest.ini/setup.cfg file.'
-            )
-        ranks.append(best_match[0])
+                f'pytest.ini/setup.cfg file.') from None
+        ranks.append(rank)
     args = sorted(range(len(items)), key=ranks.__getitem__)
     items[:] = [items[i] for i in args]
 
@@ -34,5 +33,6 @@ def expand_test_order(x):
     levels = {}
     for _prefix, _name in lines:
         levels[len(_prefix)] = _name
-        out.append("".join(j for (i, j) in levels.items() if i <= len(_prefix)))
+        out.append("".join(j for (i, j) in levels.items()
+                           if i <= len(_prefix)))
     return out
