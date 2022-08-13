@@ -27,7 +27,7 @@ setup(
         "pytest11": ["ordered = pytest_ordered",],
     },
     extras_require={
-        "test": ["pytest>=3", "pytest-order", "coverage", "pytest-cov"]
+        "test": ["pytest>=3", "pytest-order", "coverage"]
     },
     install_requires=["pytest>=3.5.0"],
     license="MIT",
