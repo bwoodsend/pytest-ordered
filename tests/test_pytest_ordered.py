@@ -20,25 +20,28 @@ MOCK_PROJECT = Path(__file__, "../../mock-project").resolve()
 
 def test_hello_ini_setting(pytester):
     shutil.copytree(
-        MOCK_PROJECT / "tests",
-        pytester.path / "tests",
+        MOCK_PROJECT / "tests", pytester.path / "tests",
         ignore=lambda _, names: [i for i in names if i == "__pycache__"])
 
     pytester.makefile(".ini", pytest="")
-    result = pytester.runpytest('-v', "-W", "error::UserWarning")
+    result = pytester.runpytest_subprocess('-vs')
     assert result.ret == 0, str(result.stdout)
 
     shutil.copy(MOCK_PROJECT / "pytest.ini", pytester.path)
-    result = pytester.runpytest("-W", "error::UserWarning")
+    result = pytester.runpytest_subprocess("-vs")
     assert result.ret == 0, str(result.stdout)
     result.stdout.fnmatch_lines([
-        "*test_first*", "*test_second*", "*test_third*", "*test_fourth*",
-        "*test_fifth*"
+        "*test_first*",
+        "*test_second.py::TestSecondFoo*",
+        "*test_second.py::test_foo*",
+        "*test_third*",
+        "*test_fourth*",
+        "*test_fifth*",
     ])
 
     shutil.copy(MOCK_PROJECT / "degenerate-pytest.ini",
                 pytester.path / "pytest.ini")
-    result = pytester.runpytest("-W", "error::UserWarning")
+    result = pytester.runpytest_subprocess()
     assert result.ret != 0, str(result.stdout)
     result.stderr.re_match_lines([
         r".*files \['tests/test_fifth.py'\] do not .* the \"order\" section.*"

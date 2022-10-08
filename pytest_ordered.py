@@ -15,7 +15,7 @@ def pytest_collection_modifyitems(session, config, items):
     ranks = []
     errors = set()
     for test in items:
-        location = test.location[0].replace(os.path.sep, "/")
+        location = test.nodeid.split("::")[0]
         try:
             rank = order.index(location)
         except ValueError:
@@ -37,6 +37,5 @@ def expand_test_order(x):
     levels = {}
     for _prefix, _name in lines:
         levels[len(_prefix)] = _name
-        out.append("".join(j for (i, j) in levels.items()
-                           if i <= len(_prefix)))
+        out.append("".join(j for (i, j) in levels.items() if i <= len(_prefix)))
     return out

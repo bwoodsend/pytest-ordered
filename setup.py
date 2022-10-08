@@ -26,9 +26,7 @@ setup(
     entry_points={
         "pytest11": ["ordered = pytest_ordered",],
     },
-    extras_require={
-        "test": ["pytest", "pytest-order", "coverage"]
-    },
+    extras_require={"test": ["pytest", "pytest-order", "pytest-cov"]},
     install_requires=["pytest>=6.2.0"],
     license="MIT",
     long_description=readme,
