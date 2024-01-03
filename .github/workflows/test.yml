@@ -13,34 +13,28 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: [3.9, 3.6, 3.7, 3.8]
-        architecture: ['x64']
+        python-version: [3.9, 3.7, 3.8, '3.10', 3.11, 3.12]
         include:
           - os: macos-latest
-            python-version: 3.9
-            architecture: 'x64'
-          - name: Windows
-            os: windows-latest
-            python-version: 3.9
-            architecture: 'x64'
-          - name: Windows 32-bit
-            os: windows-latest
-            python-version: 3.9
-            architecture: 'x86'
+            python-version: 3.12
+          - os: windows-latest
+            python-version: 3.12
+          - os: ubuntu-20.04
+            python-version: 3.6
 
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v3
+      - uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
-          architecture: ${{ matrix.architecture }}
 
       - run: pip install wheel
       - run: pip install -e .[test]
       - run: pytest
 
       - run: pip install pytest==6.2.0
+        if: matrix.python-version == '3.7'
       - run: pytest
+        if: matrix.python-version == '3.7'
