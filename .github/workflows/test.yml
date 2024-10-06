@@ -1,8 +1,7 @@
----
 name: Test
 
 on:
-  push:
+  workflow_dispatch:
 
 env:
   FORCE_COLOR: 1
@@ -13,20 +12,20 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: [3.9, 3.7, 3.8, '3.10', 3.11, 3.12]
+        python-version: [3.9, 3.7, 3.8, '3.10', 3.11, 3.12, 3.13-dev]
         include:
           - os: macos-latest
-            python-version: 3.12
+            python-version: 3.13-dev
           - os: windows-latest
-            python-version: 3.12
+            python-version: 3.13-dev
           - os: ubuntu-20.04
             python-version: 3.6
 
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v3
+      - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
