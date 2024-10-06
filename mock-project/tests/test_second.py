@@ -1,4 +1,4 @@
-from tests.common import Base
+from common import Base
 
 
 class TestSecondFoo(Base):
