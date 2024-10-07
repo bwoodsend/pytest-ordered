@@ -40,7 +40,7 @@ To install pytest-ordered, run the following in your terminal:
 
 .. code-block:: console
 
-    pip install "git+https://github.com/bwoodsend/pytest-ordered"
+    pip install pytest-ordered
 
 .. _PyPI: https://pypi.org/project/pytest-ordered/
 
