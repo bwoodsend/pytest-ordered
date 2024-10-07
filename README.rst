@@ -5,13 +5,13 @@ Welcome to pytest-ordered!
 A pytest plugin to control the order in which tests are run in.
 
 ∘
-`MIT license <https://github.com/bwoodsend/pytest_ordered/blob/master/LICENSE>`_
+`MIT license <https://github.com/bwoodsend/pytest-ordered/blob/master/LICENSE>`_
 ∘
-`Source code <https://github.com/bwoodsend/pytest_ordered>`_
+`Source code <https://github.com/bwoodsend/pytest-ordered>`_
 ∘
-`Bug reports <https://github.com/bwoodsend/pytest_ordered/issues>`_
+`Bug reports <https://github.com/bwoodsend/pytest-ordered/issues>`_
 ∘
-`Support <https://github.com/bwoodsend/pytest_ordered/discussions>`_
+`Support <https://github.com/bwoodsend/pytest-ordered/discussions>`_
 
 ``pytest-ordered`` allows you to declare the order in which test files are ran
 using the ``pytest.ini``. The order in which individual tests within each file
@@ -36,7 +36,7 @@ To install pytest-ordered, run the following in your terminal:
 
     pip install "git+https://github.com/bwoodsend/pytest-ordered"
 
-.. _PyPI: https://pypi.org/project/pytest_ordered/
+.. _PyPI: https://pypi.org/project/pytest-ordered/
 
 
 Usage

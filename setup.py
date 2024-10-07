@@ -32,9 +32,9 @@ setup(
     install_requires=["pytest>=6.2.0"],
     license="MIT",
     long_description=readme,
-    name="pytest_ordered",
+    name="pytest-ordered",
     py_modules=["pytest_ordered"],
     python_requires=">=3.6",
     version="0.1.0",
-    url="https://github.com/bwoodsend/pytest_ordered",
+    url="https://github.com/bwoodsend/pytest-ordered",
 )
