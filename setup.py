@@ -25,7 +25,7 @@ setup(
         "Programming Language :: Python :: 3 :: Only",
         "License :: OSI Approved :: MIT License",
     ],
-    description="A pytest plugin to control the order in which tests are run in.",
+    description="Declare the order in which tests should run in your pytest.ini",
     entry_points={
         "pytest11": ["ordered = pytest_ordered",],
     },

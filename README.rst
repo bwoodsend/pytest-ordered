@@ -2,7 +2,7 @@
 Welcome to pytest-ordered!
 ==========================
 
-A pytest plugin to control the order in which tests are run in.
+A pytest plugin to control the order in which tests are ran.
 
 ∘
 `MIT license <https://github.com/bwoodsend/pytest-ordered/blob/master/LICENSE>`_
@@ -22,9 +22,15 @@ allows you to order files by adding a ``pytestmark = pytest.mark.order(x)`` line
 to each file or decorating each function with ``@pytest.mark.order(x)`` (where
 ``x`` is some integer enumeration used to sort tests by). I personally didn't
 like this design because your configuration is scattered across each file rather
-than all in one place and because whenever you need to insert a file into the
-middle of your test suite, you need to re-enumerate all the files that come
-afterwards... hence this project.
+than all in one place (get used to squinting at the output of
+``git grep pytest.mark.order`` to *debug* your running order) and because
+whenever you need to insert a file into the middle of your test suite, you need
+to re-enumerate all the files that come afterwards... hence this project. Asides
+from where the order is configured, the other prominent differences to
+``pytest-order`` are that this package does not provide a way to reorder tests
+within files (since you can already accomplish that just by writing them in the
+order you want them to run in) and it treats forgetting to specify a file in the
+running order as an error.
 
 
 Installation
@@ -83,7 +89,7 @@ is equivalent to but less cumbersome than:
       - tests/test_fifth.py
 
 For simply laid out test suites (i.e. one ``tests`` directory with no
-sub-directories), you can normally just use:
+sub-directories), your configuration will something like:
 
 .. code-block:: ini
 
@@ -98,9 +104,7 @@ sub-directories), you can normally just use:
 Why order tests?
 ----------------
 
-This is a philosophy which I'm slightly obsessed with. I believe that it makes
-even the biggest, most complicated projects easy to diagnose test failures in.
-Hold tight, this is going to be a disproportionately large piece of text. ⛑
+Ordering tests makes troubleshooting faster!
 
 If you imagine a reasonably well laid out code project, you can think of it in
 layers. You have low level functions which perform basic tasks and reference
@@ -139,14 +143,14 @@ corresponds to the broken function. Because it tests that function directly
 rather than testing some other function which depends on the former, that test
 is your simplest and quickest possible reproducer of the bug. Additionally,
 since all tests before have passed, you know that any lower level functions the
-broken uses are unlikely to be the cause of the failure as their tests have
-already run. Unless you're in the habit of writing very long functions, this
+broken one uses are unlikely to be the cause of the failure as their tests have
+already ran. Unless you're in the habit of writing very long functions, this
 probably only leaves you with a few lines of previously untested code in which
 to search for the bug. Quite often, I find that I can diagnose and fix a failure
-without even looking at the traceback - just knowing which test pytest halted on
-is enough. This knowing which lines of code to suspect is extremely valuable
-if you're diagnosing something remotely on CI/CD which you can't reproduce
-on a machine in front of you.
+without even looking at the error message – just knowing which test pytest
+halted on is enough. This knowing which lines of code to suspect is extremely
+valuable if you're diagnosing something remotely on CI/CD which you can't
+reproduce on a machine in front of you.
 
 After you've fixed the first failure with surprising ease, you can go back to
 running ``pytest -x`` until the whole suite passes.
