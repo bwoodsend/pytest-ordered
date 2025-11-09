@@ -36,6 +36,6 @@ setup(
     name="pytest-ordered",
     py_modules=["pytest_ordered"],
     python_requires=">=3.6",
-    version="1.0.0",
+    version="1.0.1",
     url="https://github.com/bwoodsend/pytest-ordered",
 )

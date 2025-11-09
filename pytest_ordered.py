@@ -10,7 +10,7 @@ def pytest_addoption(parser):
 def pytest_collection_modifyitems(session, config, items):
     if not config.getini("order"):
         return
-    order = expand_test_order(config.inicfg["order"])
+    order = expand_test_order("\n".join(config.getini("order")))
     ranks = []
     errors = set()
     for test in items:
