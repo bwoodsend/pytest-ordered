@@ -34,6 +34,6 @@ jobs:
       - run: pytest
 
       - run: pip install pytest==6.2.0
-        if: matrix.python-version == '3.7'
+        if: matrix.python-version == '3.6'
       - run: pytest
-        if: matrix.python-version == '3.7'
+        if: matrix.python-version == '3.6'
